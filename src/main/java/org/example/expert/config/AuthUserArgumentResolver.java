@@ -7,11 +7,13 @@ import org.example.expert.domain.common.dto.AuthUser;
 import org.example.expert.domain.user.enums.UserRole;
 import org.springframework.core.MethodParameter;
 import org.springframework.lang.Nullable;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
+@Component
 public class AuthUserArgumentResolver implements HandlerMethodArgumentResolver {
 
     @Override
@@ -20,6 +22,8 @@ public class AuthUserArgumentResolver implements HandlerMethodArgumentResolver {
         boolean isAuthUserType = parameter.getParameterType().equals(AuthUser.class);
 
         // @Auth 어노테이션과 AuthUser 타입이 함께 사용되지 않은 경우 예외 발생
+        // 이게왜 필요했을까. 어디에서 사용하려고 했을까
+        // 어디서 사용하려고 했는데
         if (hasAuthAnnotation != isAuthUserType) {
             throw new AuthException("@Auth와 AuthUser 타입은 함께 사용되어야 합니다.");
         }
