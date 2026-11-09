@@ -66,7 +66,7 @@ public class TodoService {
 
     @Transactional(readOnly = true)
     public TodoResponse getTodo(long todoId) {
-        Todo todo = todoRepository.findByIdWithUser(todoId)
+        Todo todo = todoRepository.findById(todoId)
                 .orElseThrow(() -> new InvalidRequestException("Todo not found"));
 
         User user = todo.getUser();
@@ -76,7 +76,7 @@ public class TodoService {
                 todo.getTitle(),
                 todo.getContents(),
                 todo.getWeather(),
-                new UserResponse(user.getId(), user.getEmail()),
+                new UserResponse(user.getId(), user.getEmail()), // 쿼리문이 실행되는 부분(EntityGraph를 통해 반복 작성 방지)
                 todo.getCreatedAt(),
                 todo.getModifiedAt()
         );
